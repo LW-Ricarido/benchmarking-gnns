@@ -8,16 +8,20 @@ from ogb.nodeproppred import DglNodePropPredDataset
 
 class OgbProductsDataset(torch.utils.data.Dataset):
 
-    def __init__(self, DATASET_NAME='ObgProducts', path='data/Ogb') -> None:
+    def __init__(self, DATASET_NAME='ObgProducts', path='/home/wei/dataset') -> None:
         self.name = DATASET_NAME
-        self.data = DglNodePropPredDataset(name='ogbn-products')
+        self.data = DglNodePropPredDataset(name='ogbn-products',root=path)
         
         self.g, self.labels = None, None
         self.train_masks, self.val_masks, self.test_mask = None, None, None
         self.num_classes, self.n_feats = None, None
+        
+        self._load()
     
     def _load(self):
         self.g, self.labels = self.data[0]
+        self.labels = self.labels.reshape(self.labels.shape[0])
+        self.g.ndata['label'] = self.labels
         split_idx = self.data.get_idx_split()
         train_idx = split_idx['train']
         valid_idx = split_idx['valid']
