@@ -5,6 +5,7 @@ import torch.nn.functional as F
 import dgl
 
 from layers.mlp_readout_layer import MLPReadout
+from loss.triplet_loss import TripletLoss
 
 
 class MLPNet(nn.Module):
@@ -21,6 +22,10 @@ class MLPNet(nn.Module):
         self.gated = net_params['gated']
         self.n_classes = n_classes
         self.device = net_params['device']
+        if 'loss_type' in net_params.keys():
+            self.loss_type = net_params['loss_type']
+        else:
+            self.loss_type = 'cross_entropy'
         
         self.embedding_h = nn.Linear(in_dim_node, hidden_dim) # node feat is an integer
         self.in_feat_dropout = nn.Dropout(in_feat_dropout)
@@ -61,7 +66,10 @@ class MLPNet(nn.Module):
         
     def loss(self, pred, label):
 
-        criterion = nn.CrossEntropyLoss()
+        if self.loss_type == 'cross_entropy':
+            criterion = nn.CrossEntropyLoss()
+        elif self.loss_type == 'triplet_loss':
+            criterion = TripletLoss()
         loss = criterion(pred, label)
 
         return loss

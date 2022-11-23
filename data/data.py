@@ -15,6 +15,7 @@ from data.Cora import CoraDataset
 from data.CiteSeer import CiteSeerDateset
 from data.Pubmed import PubmedDataset
 from data.OgbProducts import OgbProductsDataset
+from data.OgbArxiv import OgbArxivDataset
 
 def LoadData(DATASET_NAME):
     """
@@ -74,3 +75,6 @@ def LoadData(DATASET_NAME):
     
     if DATASET_NAME == 'OgbProducts':
         return OgbProductsDataset(DATASET_NAME)
+
+    if DATASET_NAME == 'OgbArxiv':
+        return OgbArxivDataset(DATASET_NAME)
