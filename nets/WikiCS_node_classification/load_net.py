@@ -10,6 +10,7 @@ from nets.WikiCS_node_classification.graphsage_net import GraphSageNet
 from nets.WikiCS_node_classification.mlp_net import MLPNet
 from nets.WikiCS_node_classification.gin_net import GINNet
 from nets.WikiCS_node_classification.mo_net import MoNet as MoNet_
+from nets.WikiCS_node_classification.DAGNN_net import DAGNNNet
 
 def GatedGCN(net_params):
     return GatedGCNNet(net_params)
@@ -32,6 +33,9 @@ def GIN(net_params):
 def MoNet(net_params):
     return MoNet_(net_params)
 
+def DAGNN(net_params):
+    return DAGNNNet(net_params)
+
 def gnn_model(MODEL_NAME, net_params):
     models = {
         'GatedGCN': GatedGCN,
@@ -40,7 +44,8 @@ def gnn_model(MODEL_NAME, net_params):
         'GraphSage': GraphSage,
         'MLP': MLP,
         'GIN': GIN,
-        'MoNet': MoNet
+        'MoNet': MoNet,
+        'DAGNN': DAGNN
     }
         
     return models[MODEL_NAME](net_params)
