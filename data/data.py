@@ -11,7 +11,11 @@ from data.CSL import CSLDataset
 from data.cycles import CyclesDataset
 from data.graphtheoryprop import GraphTheoryPropDataset
 from data.WikiCS import WikiCSDataset
-
+from data.Cora import CoraDataset
+from data.CiteSeer import CiteSeerDateset
+from data.Pubmed import PubmedDataset
+from data.OgbProducts import OgbProductsDataset
+from data.OgbArxiv import OgbArxivDataset
 
 def LoadData(DATASET_NAME):
     """
@@ -60,3 +64,17 @@ def LoadData(DATASET_NAME):
     if DATASET_NAME == 'WikiCS':
         return WikiCSDataset(DATASET_NAME)
     
+    if DATASET_NAME == 'Cora':
+        return CoraDataset(DATASET_NAME)
+    
+    if DATASET_NAME == 'CiteSeer':
+        return CiteSeerDateset(DATASET_NAME)
+
+    if DATASET_NAME == "Pubmed":
+        return PubmedDataset(DATASET_NAME)
+    
+    if DATASET_NAME == 'OgbProducts':
+        return OgbProductsDataset(DATASET_NAME)
+
+    if DATASET_NAME == 'OgbArxiv':
+        return OgbArxivDataset(DATASET_NAME)
