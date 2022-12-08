@@ -20,6 +20,7 @@ class OgbArxivDataset(torch.utils.data.Dataset):
     
     def _load(self):
         self.g, self.labels = self.data[0]
+        self.g = dgl.add_self_loop(self.g)
         self.labels = self.labels.reshape(self.labels.shape[0])
         self.g.ndata['label'] = self.labels
         split_idx = self.data.get_idx_split()
@@ -41,6 +42,12 @@ class OgbArxivDataset(torch.utils.data.Dataset):
         self.num_classes = len(set(self.g.ndata['label'].tolist()))
         # self.g.ndata['feat'] = self.g.ndata['feat']
         self.g.edata['feat'] = torch.zeros(self.g.number_of_edges(), 1)
+
+        print("NumNodes:{}\n NumEdges:{}\n NumFeats:{}\n NumClasses:{}\n NumTraining:{}\n NumValid:{}\n NumTest:{}\n".format(
+            self.g.number_of_nodes(), self.g.number_of_edges(), self.n_feats, self.num_classes,
+            len(train_idx), len(valid_idx),len(test_idx)
+        ))
+
 
     def _add_positional_encodings(self, pos_enc_dim):
         g = self.g
