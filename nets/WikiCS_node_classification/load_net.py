@@ -12,6 +12,7 @@ from nets.WikiCS_node_classification.gin_net import GINNet
 from nets.WikiCS_node_classification.mo_net import MoNet as MoNet_
 from nets.WikiCS_node_classification.DAGNN_net import DAGNNNet
 from nets.WikiCS_node_classification.sgc_net import SGCNet
+from nets.WikiCS_node_classification.NDLS import NDLS as NDLS_Net
 
 def GatedGCN(net_params):
     return GatedGCNNet(net_params)
@@ -39,6 +40,10 @@ def DAGNN(net_params):
 
 def SGC(net_params):
     return SGCNet(net_params)
+
+def NDLS(net_params):
+    return NDLS_Net(net_params)
+
 def gnn_model(MODEL_NAME, net_params):
     models = {
         'GatedGCN': GatedGCN,
@@ -49,7 +54,8 @@ def gnn_model(MODEL_NAME, net_params):
         'GIN': GIN,
         'MoNet': MoNet,
         'DAGNN': DAGNN,
-        'SGC': SGC
+        'SGC': SGC,
+        'NDLS': NDLS
     }
         
     return models[MODEL_NAME](net_params)
